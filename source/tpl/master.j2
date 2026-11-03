@@ -1,0 +1,251 @@
+{% include "_head.j2" %}
+<!-- 01 Global utility -->
+<div class="parent-band pad">
+  <span>Seneca Resorts &amp; Casinos · Western New York</span>
+  <nav class="hide-sm" aria-label="Utility" style="display:flex;gap:24px;align-items:center">
+    <a class="link" href="#visit">Guest help</a>
+    <a class="link" href="#visit">Accessibility</a>
+    <a class="link" href="#club">Social Club sign in</a>
+  </nav>
+</div>
+
+<!-- 02 Master header -->
+<header class="site-header pad">
+  <a class="logo" href="index.html" aria-label="Seneca Resorts &amp; Casinos home"><img src="{{ logos.master }}" alt="Seneca Resorts &amp; Casinos"></a>
+  <nav class="main-nav" aria-label="Main">
+    <a href="#properties">Properties</a><a href="#offers">Offers</a><a href="#todo">Rooms &amp; Stays</a><a href="#todo">Dining</a><a href="#whatson">Entertainment</a><a href="#meetings">Meetings</a><a href="#visit">Guest Services</a>
+  </nav>
+  <div style="display:flex;gap:12px;align-items:center">
+    <a class="link hide-sm" href="#club" style="font-size:14px">Sign in</a>
+    <a class="btn sm btn-brand" href="#properties">Book a stay</a>
+    <button class="menu-btn" type="button" data-open-menu aria-controls="drawer" aria-expanded="false" aria-label="Open menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<div class="drawer" id="drawer" role="dialog" aria-label="Menu">
+  <button class="menu-btn close" type="button" style="display:inline-flex" aria-label="Close menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  <a href="#properties">Properties</a><a href="#offers">Offers</a><a href="#todo">Rooms &amp; Stays</a><a href="#todo">Dining</a><a href="#whatson">Entertainment</a><a href="#meetings">Meetings</a><a href="#visit">Guest Services</a><a href="#club">Social Club</a>
+</div>
+
+<!-- 03 Hero -->
+<section class="hero" aria-label="Plan your Seneca experience">
+  <img class="hero-img" src="{{ img.casino_floor }}" alt="A glowing casino floor lined with slot machines">
+  <div class="hero-scrim"></div>
+  <div class="hero-body pad">
+    <div class="hero-row">
+      <h1 class="display" style="max-width:1000px">Plan your<br>Seneca experience.</h1>
+      <div class="hero-side">
+        <p>Three resort &amp; casino destinations and a championship golf course across Western New York. Choose where to go, find the offer that fits, and book.</p>
+        <div class="btn-row"><a class="btn btn-white" href="#properties">Explore properties</a><a class="btn btn-ghost-light" href="#offers">View offers</a></div>
+      </div>
+    </div>
+    <nav class="jump" aria-label="Jump to a property">
+      {% for p in props %}<a href="{{ p.file }}"><span class="dot" style="background:{{ p.accent }}"></span>{{ p.short }} <span class="where">— {{ p.city }}</span></a>{% endfor %}
+    </nav>
+  </div>
+</section>
+
+<main class="page" id="main">
+
+<!-- 04 Choose your property -->
+<section id="properties" class="section pad">
+  <div class="sec-head rise">
+    <h2 class="h2">Choose your<br>destination</h2>
+    <p class="lede" style="max-width:420px">Compare at a glance — where it is, whether there's a hotel, and what it's known for — before you leave this page.</p>
+  </div>
+  <div class="bar">
+    <span style="font-weight:500">Properties</span>
+    <label class="meta" style="display:inline-flex;align-items:center;gap:8px">Type
+      <select class="select" style="border:0;padding:0"><option>All destinations</option><option>Resort &amp; casino</option><option>Casino</option><option>Golf</option></select></label>
+    <span class="hide-sm">{{ props|length }}</span>
+  </div>
+  <div class="grid g-4">
+    {% for p in props %}
+    <article class="prop card rise" style="--c:{{ p.accent }}">
+      <a class="well r-45" href="{{ p.file }}" aria-label="Explore {{ p.name }}">
+        <img class="px" src="{{ p.card }}" alt="{{ p.cardAlt }}" loading="lazy">
+        <img class="plogo" src="{{ p.logoWhite }}" alt="">
+      </a>
+      <div class="prop-cap">
+        <h3>{{ p.name }}</h3>
+        <p class="meta">{{ p.facts }}</p>
+        <div class="prop-actions">
+          <a class="link" href="{{ p.file }}" style="color:{{ p.ink }};font-weight:600">Explore {{ p.tiny }} →</a>
+          <a class="link" href="{{ p.file }}#{{ 'stay' if p.hasHotel else 'offers' }}">{{ p.masterCta }}</a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- 05 Offers across Seneca -->
+<section id="offers" class="section pad" style="padding-top:32px">
+  <div class="sec-head rise">
+    <h2 class="h2">Offers</h2>
+    <a class="link" href="#offers" style="font-size:15px;color:var(--brand);font-weight:600">View all offers →</a>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;align-items:center">
+    <div role="group" aria-label="Filter offers by category" data-chips style="display:flex;flex-wrap:wrap;gap:8px">
+      <button class="chip" type="button" aria-pressed="true">All</button><button class="chip" type="button" aria-pressed="false">Rooms &amp; packages</button><button class="chip" type="button" aria-pressed="false">Casino</button><button class="chip" type="button" aria-pressed="false">Dining</button><button class="chip" type="button" aria-pressed="false">Spa</button><button class="chip" type="button" aria-pressed="false">Member-only</button>
+    </div>
+    <label class="meta" style="margin-left:auto;display:inline-flex;align-items:center;gap:8px">Property
+      <select class="select"><option>All properties</option>{% for p in props %}<option>{{ p.short }}</option>{% endfor %}</select></label>
+  </div>
+  <div class="grid g-3">
+    <article class="offer card rise">
+      <div class="well r-1610"><img class="px" src="{{ img.room1 }}" alt="" loading="lazy"></div>
+      <div class="offer-body">
+        <div class="label" style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px;color:{{ by.niagara.ink }}"><span class="dot sm" style="background:{{ by.niagara.accent }}"></span>Seneca Niagara</span><span class="meta" style="font-weight:400">· Rooms &amp; packages</span></div>
+        <h3>Midweek Stay &amp; Play</h3>
+        <dl class="facts"><dt>Valid</dt><dd>[Start date] – [End date], Sun–Thu</dd><dt>Who</dt><dd>Everyone, 21+</dd></dl>
+        <a class="btn sm btn-dark" href="{{ by.niagara.file }}#offers">View offer</a>
+      </div>
+    </article>
+    <article class="offer card rise">
+      <div class="well r-1610"><img class="px" src="{{ img.dining1 }}" alt="" loading="lazy"></div>
+      <div class="offer-body">
+        <div class="label" style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px;color:{{ by.allegany.ink }}"><span class="dot sm" style="background:{{ by.allegany.accent }}"></span>Seneca Allegany</span><span class="meta" style="font-weight:400">· Dining</span></div>
+        <h3>Dinner credit with a two-night stay</h3>
+        <dl class="facts"><dt>Valid</dt><dd>[Start date] – [End date]</dd><dt>Who</dt><dd>Hotel guests · [$ value] credit</dd></dl>
+        <a class="btn sm btn-dark" href="{{ by.allegany.file }}#offers">View offer</a>
+      </div>
+    </article>
+    <article class="offer card rise">
+      <div class="well r-1610"><img class="px" src="{{ img.slots }}" alt="" loading="lazy"><span class="badge">Member-only</span></div>
+      <div class="offer-body">
+        <div class="label" style="display:flex;gap:8px;flex-wrap:wrap"><span style="color:var(--brand)">All casino properties</span><span class="meta" style="font-weight:400">· Casino</span></div>
+        <h3>Your personal Social Club offers</h3>
+        <dl class="facts"><dt>Valid</dt><dd>Varies by offer — shown after sign in</dd><dt>Who</dt><dd>Social Club members · sign in required</dd></dl>
+        <a class="btn sm btn-brand" href="#club">Sign in to see offers</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 06 What would you like to do? -->
+<section id="todo" class="section pad" style="padding-top:32px">
+  <h2 class="h2 rise" style="margin-bottom:32px">What would<br>you like to do?</h2>
+  <div class="xp">
+    <ul class="xp-list">
+      {% for x in experiences %}
+      <li><a class="xp-row{% if loop.first %} on{% endif %}" href="{{ x.href }}" data-img="{{ x.img }}" data-alt="{{ x.alt }}" data-name="{{ x.name }}">
+        <img src="{{ x.thumb }}" alt="" loading="lazy">
+        <span class="name">{{ x.name }}</span>
+        <span class="xp-where">{% for w in x.where %}<span><span class="dot sm" style="background:{{ w.accent }}"></span>{{ w.tiny }}</span>{% endfor %}</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a></li>
+      {% endfor %}
+    </ul>
+    <figure class="xp-fig" aria-live="polite">
+      <img src="{{ experiences[0].img }}" alt="{{ experiences[0].alt }}">
+      <figcaption>{{ experiences[0].name }}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 07 What's on -->
+<section id="whatson" class="section pad" style="background:var(--soft)">
+  <div class="sec-head rise">
+    <h2 class="h2">What's on</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <label class="meta" style="display:inline-flex;align-items:center;gap:8px">Property <select class="select"><option>All</option><option>Seneca Niagara</option><option>Seneca Allegany</option><option>Seneca Buffalo Creek</option></select></label>
+      <label class="meta" style="display:inline-flex;align-items:center;gap:8px">When <select class="select"><option>Next 30 days</option><option>This weekend</option><option>Pick dates</option></select></label>
+    </div>
+  </div>
+  <ol class="events">
+    <li class="ev rise"><div><div class="day">14</div><div class="mon">NOV · SAT</div></div><div><div class="title">[Headliner name]</div><div class="sub">Concert · Doors [time]</div></div><div class="venue"><span class="dot sm" style="background:{{ by.niagara.accent }}"></span>Seneca Niagara · [Venue]</div><a class="btn sm btn-dark" href="{{ by.niagara.file }}#events">Tickets</a></li>
+    <li class="ev rise"><div><div class="day">21</div><div class="mon">NOV · SAT</div></div><div><div class="title">[Comedy headliner]</div><div class="sub">Comedy · Show [time]</div></div><div class="venue"><span class="dot sm" style="background:{{ by.allegany.accent }}"></span>Seneca Allegany · [Venue]</div><a class="btn sm btn-dark" href="{{ by.allegany.file }}#events">Tickets</a></li>
+    <li class="ev rise"><div><div class="day">05</div><div class="mon">DEC · FRI</div></div><div><div class="title">[Live band]</div><div class="sub">Live music · Free entry</div></div><div class="venue"><span class="dot sm" style="background:{{ by.buffalo.accent }}"></span>Seneca Buffalo Creek · [Lounge]</div><a class="btn sm btn-ghost" href="{{ by.buffalo.file }}#events">Details</a></li>
+  </ol>
+  <a class="link" href="#whatson" style="display:inline-block;margin-top:24px;font-size:15px;color:var(--brand);font-weight:600">Open the full events calendar →</a>
+</section>
+
+<!-- 08 Social Club -->
+<section id="club" class="band" style="background:#1b1030">
+  <img class="px" src="{{ img.concert_warm }}" alt="" loading="lazy" style="opacity:.6">
+  <div class="band-scrim" style="background:linear-gradient(90deg,rgba(27,16,48,.96) 0%,rgba(27,16,48,.72) 55%,rgba(83,48,149,.35) 100%)"></div>
+  <div class="band-body pad">
+    <div class="drift" style="max-width:760px">
+      <p class="kicker" style="color:#cbbcf0">Seneca Social Club</p>
+      <h2>One card.<br>Every Seneca visit.</h2>
+    </div>
+    <div style="max-width:440px;display:flex;flex-direction:column;gap:24px">
+      <ul class="benefits">
+        <li><strong>Earn</strong> points on play, rooms and dining across properties.</li>
+        <li><strong>See</strong> your personal offers — they appear once you sign in.</li>
+        <li><strong>Redeem</strong> on site or in the Seneca app.</li>
+      </ul>
+      <div class="btn-row"><a class="btn btn-white" href="#club" style="color:var(--brand);font-weight:600">Join free</a><a class="btn btn-ghost-light" href="#club">Sign in</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 Plan your visit -->
+<section id="visit" class="section pad">
+  <h2 class="h2 rise" style="margin-bottom:40px">Plan your visit</h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px">
+    {% for p in props %}
+    <div class="plan rise" style="--c:{{ p.accent }}"><strong>{{ p.short }}</strong><span class="meta">{{ p.city }}</span><a class="link" href="{{ p.file }}#visit">Directions &amp; parking</a><a class="link" href="{{ p.file }}#visit">{{ 'Tee times & contact' if not p.hasCasino else 'Hours & contact' }}</a></div>
+    {% endfor %}
+  </div>
+  <div class="btn-row" style="margin-top:40px"><a class="btn sm btn-quiet" href="#visit">FAQs</a><a class="btn sm btn-quiet" href="#visit">Accessibility</a><a class="btn sm btn-quiet" href="#visit">Shuttles &amp; transport</a><a class="btn sm btn-quiet" href="#visit">Contact guest services</a></div>
+</section>
+
+<!-- 10 Proof and stories -->
+<section class="pad" style="padding-bottom:96px">
+  <div style="display:flex;flex-wrap:wrap;gap:16px">
+    <a class="card well rise" href="#main" style="flex:2 1 560px;min-height:440px;color:#fff;text-decoration:none">
+      <img class="px" src="{{ img.hills }}" alt="Green hills under morning mist in Western New York" loading="lazy">
+      <div style="position:absolute;left:0;right:0;bottom:0;padding:28px;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.8) 70%)">
+        <p class="kicker" style="color:#e2e2e2;margin-bottom:10px">Discover Seneca</p>
+        <h3 style="margin:0;font-size:clamp(28px,3vw,44px);font-weight:500;letter-spacing:-.03em;line-height:1.05;max-width:640px">Owned by the Seneca Nation. Rooted in Western New York.</h3>
+      </div>
+    </a>
+    <div class="rise" style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:16px">
+      <a href="#main" style="display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--line);text-decoration:none;flex-grow:1"><span class="label" style="color:var(--brand)">Award</span><span style="font-size:18px;font-weight:500">[Award name] — [Year]</span><span class="meta">[Awarding body]</span></a>
+      <a href="#main" style="display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--line);text-decoration:none;flex-grow:1"><span class="label" style="color:var(--brand)">News</span><span style="font-size:18px;font-weight:500">The new Seneca app: points, offers and reservations in one place</span><span class="meta">Read the story →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 11 Meetings & groups -->
+<section id="meetings" class="pad" style="padding-bottom:96px">
+  <div style="display:flex;flex-wrap:wrap;background:var(--ink);color:#fff">
+    <div class="well" style="flex:1 1 420px;min-height:380px"><img class="px" src="{{ img.ballroom }}" alt="Ballroom set for a banquet" loading="lazy"></div>
+    <form style="flex:1 1 420px;padding:48px;display:flex;flex-direction:column;gap:16px" onsubmit="return false">
+      <p class="kicker" style="color:#cbbcf0;margin:0">Meetings &amp; groups</p>
+      <h2 style="margin:0 0 8px;font-size:clamp(32px,3.4vw,52px);font-weight:500;letter-spacing:-.035em;line-height:1">Bring your group to Seneca.</h2>
+      <label class="field">Name<input type="text" autocomplete="name"></label>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <label class="field" style="flex:1 1 180px">Email<input type="email" autocomplete="email"></label>
+        <label class="field" style="flex:1 1 180px">Property<select><option>Seneca Niagara</option><option>Seneca Allegany</option><option>Not sure yet</option></select></label>
+      </div>
+      <button class="btn btn-white" type="submit" style="align-self:flex-start;margin-top:8px">Plan a meeting</button>
+    </form>
+  </div>
+</section>
+
+<!-- 12 Footer -->
+<footer class="footer">
+  <img class="px blur" src="{{ img.falls_alt }}" alt="" loading="lazy">
+  <div class="f-card">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px">
+      <p style="margin:0;font-size:clamp(22px,2.2vw,30px);line-height:1.2;color:var(--muted);letter-spacing:-.015em">Planning a visit?<br>We're ready to host you.</p>
+      <a href="#visit" style="font-size:clamp(24px,2.4vw,34px);text-underline-offset:6px;letter-spacing:-.02em">Get guest help →</a>
+    </div>
+    <div class="f-cols">
+      <div><span class="meta">Properties</span>{% for p in props %}<a href="{{ p.file }}">{{ p.short }}</a>{% endfor %}</div>
+      <div><span class="meta">Plan</span><a href="#offers">Offers</a><a href="#todo">Rooms &amp; stays</a><a href="#todo">Dining</a><a href="#whatson">Entertainment</a><a href="#meetings">Meetings</a></div>
+      <div><span class="meta">Guest services</span><a href="#visit">Contact</a><a href="#visit">FAQs</a><a href="#visit">Accessibility</a><a href="#visit">Directions</a></div>
+      <div><span class="meta">About</span><a href="#main">About Seneca</a><a href="#main">News &amp; press</a><a href="#main">Careers</a><a href="#main">Responsible gaming</a></div>
+    </div>
+    <div class="f-legal">
+      <img src="{{ logos.master }}" alt="Seneca Resorts &amp; Casinos" style="height:40px;width:auto">
+      <span>Must be 21 or older to gamble. Gambling problem? Call 1-877-8-HOPENY.</span>
+      <span style="display:flex;gap:20px"><a class="link" href="#main">Privacy</a><a class="link" href="#main">Terms</a><span>© 2026 Seneca Resorts &amp; Casinos</span></span>
+    </div>
+    <p class="credit" style="margin:-40px 0 0">Placeholder photography: Unsplash (free license).</p>
+  </div>
+</footer>
+</main>
+{% include "_foot.j2" %}

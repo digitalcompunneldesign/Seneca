@@ -1,0 +1,240 @@
+{% include "_head.j2" %}
+<!-- 01a Parent band: persistent route back to the master site -->
+<div class="parent-band pad">
+  <a class="link" href="index.html" style="display:inline-flex;align-items:center;gap:10px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>All Seneca properties</a>
+  <span class="hide-sm" style="display:inline-flex;align-items:center;gap:10px;color:#d6d2dc">Part of <img src="{{ logos.masterWhite }}" alt="Seneca Resorts &amp; Casinos" style="height:26px;width:auto"></span>
+  <span style="display:inline-flex;gap:20px"><a class="link" href="#visit">Guest services</a><a class="link" href="#club">Sign in</a></span>
+</div>
+
+<!-- 01b Property header -->
+<header class="site-header has-rule pad">
+  <a class="logo" href="#main" aria-label="{{ t.name }} home"><img src="{{ t.logo }}" alt="{{ t.name }}"></a>
+  <nav class="main-nav" aria-label="{{ t.short }}">{% for n in nav %}<a href="{{ n.href }}">{{ n.label }}</a>{% endfor %}</nav>
+  <div style="display:flex;gap:10px;align-items:center">
+    <a class="btn sm btn-accent" href="{{ t.primaryHref }}">{{ t.primary }}</a>
+    <button class="menu-btn" type="button" data-open-menu aria-controls="drawer" aria-expanded="false" aria-label="Open menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+<div class="drawer" id="drawer" role="dialog" aria-label="Menu">
+  <button class="menu-btn close" type="button" style="display:inline-flex" aria-label="Close menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  {% for n in nav %}<a href="{{ n.href }}">{{ n.label }}</a>{% endfor %}
+  <a href="index.html" style="color:var(--brand)">← All Seneca properties</a>
+</div>
+
+<!-- 02 Hero -->
+<section class="hero" aria-label="{{ t.heroLine }}">
+  <img class="hero-img" src="{{ t.hero }}" alt="{{ t.heroAlt }}">
+  <div class="hero-scrim"></div>
+  <div class="hero-body pad" style="padding-bottom:150px">
+    <div class="hero-row">
+      <div style="max-width:1000px">
+        <p class="kicker"><span class="dot" style="background:var(--accent)"></span>{{ t.name }} · {{ t.city }}</p>
+        <h1 class="display">{{ t.heroLine }}</h1>
+      </div>
+      <div class="hero-side">
+        <p>{{ t.heroSub }}</p>
+        <div class="btn-row"><a class="btn btn-accent" href="{{ t.primaryHref }}">{{ t.primary }}</a><a class="btn btn-ghost-light" href="{{ t.secondaryHref }}">{{ t.secondary }}</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="page" id="main" style="background:transparent">
+
+<!-- 03 Quick-plan task bar -->
+<nav class="pad" aria-label="Plan a task" style="margin-top:-110px;position:relative">
+  <ul style="list-style:none;margin:0;padding:0;background:#fff;box-shadow:0 24px 60px rgba(0,0,0,.18);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+    {% for k in tasks %}
+    <li style="border-right:1px solid var(--line)"><a href="{{ k.href }}" class="task" style="display:flex;flex-direction:column;gap:14px;padding:22px 20px;min-height:110px;text-decoration:none;color:var(--ink)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-ink)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ k.icon }}"/></svg>
+      <span style="font-size:15px;font-weight:500">{{ k.label }}</span></a></li>
+    {% endfor %}
+  </ul>
+</nav>
+
+<div style="background:#fff">
+
+<!-- 04 Featured offers -->
+<section id="offers" class="section pad" style="padding-top:112px">
+  <div class="sec-head rise">
+    <h2 class="h2">Offers at<br>{{ t.short }}</h2>
+    <a class="link" href="#offers" style="font-size:15px;color:var(--accent-ink);font-weight:600">All {{ t.short }} offers →</a>
+  </div>
+  <div class="grid g-3">
+    <article class="offer card rise">
+      <div class="well r-1610"><img class="px" src="{{ t.offerImg }}" alt="" loading="lazy"></div>
+      <div class="offer-body">
+        <div class="label" style="color:var(--accent-ink)">{{ t.offer1Cat }}</div>
+        <h3>{{ t.offer1 }}</h3>
+        <dl class="facts"><dt>Valid</dt><dd>[Start date] – [End date]</dd><dt>Who</dt><dd>Everyone · [restrictions]</dd></dl>
+        <a class="btn sm btn-dark" href="#offers">View offer</a>
+      </div>
+    </article>
+    <article class="offer card rise">
+      <div class="well r-1610"><img class="px" src="{{ img.dining1 }}" alt="" loading="lazy"></div>
+      <div class="offer-body">
+        <div class="label" style="color:var(--accent-ink)">Dining</div>
+        <h3>[Dining offer title]</h3>
+        <dl class="facts"><dt>Valid</dt><dd>[Start date] – [End date]</dd><dt>Who</dt><dd>Everyone · [restrictions]</dd></dl>
+        <a class="btn sm btn-dark" href="#offers">View offer</a>
+      </div>
+    </article>
+    <article class="offer card rise">
+      <div class="well r-1610"><img class="px" src="{{ img.slots }}" alt="" loading="lazy"><span class="badge">Member-only</span></div>
+      <div class="offer-body">
+        <div class="label" style="color:var(--brand)">Social Club</div>
+        <h3>Your personal offers</h3>
+        <dl class="facts"><dt>Valid</dt><dd>Shown after sign in</dd><dt>Who</dt><dd>Social Club members</dd></dl>
+        <a class="btn sm btn-brand" href="#club">Sign in to see offers</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 05 Stay -->
+{% if t.hasHotel %}
+<section id="stay" class="section pad" style="padding-top:32px">
+  <div class="split" style="align-items:flex-start">
+    <div class="rise" style="flex:1 1 380px;position:sticky;top:calc(var(--header-h) + 32px);display:flex;flex-direction:column;gap:20px">
+      <h2 class="h2">Stay</h2>
+      <p class="lede" style="max-width:420px">Compare rooms side by side, then book with your dates already set.</p>
+      <p style="margin:0;padding:12px 14px;background:var(--tint);font-size:14px;line-height:1.45;max-width:420px"><strong style="font-weight:600">Hotel update:</strong> [Renovation notice — last reviewed date]</p>
+      <div class="btn-row"><a class="btn btn-accent" href="#stay">Book a stay</a><a class="btn btn-ghost" href="#stay">View all rooms</a></div>
+    </div>
+    <div class="grid" style="flex:2 1 560px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+      {% for r in rooms %}
+      <a class="card rise" href="#stay" style="display:flex;flex-direction:column;gap:12px;text-decoration:none">
+        <span class="well r-34"><img class="px" src="{{ r.img }}" alt="{{ r.alt }}" loading="lazy"></span>
+        <span style="font-size:17px;font-weight:500">{{ r.name }}</span><span class="meta" style="margin-top:-6px">{{ r.meta }}</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% else %}
+<section id="stay" class="pad" style="padding-bottom:80px">
+  <a class="rise" href="index.html#properties" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:28px;border:1px solid var(--line);text-decoration:none">
+    <span style="display:flex;flex-direction:column;gap:6px"><span class="label meta" style="font-weight:400">No hotel on site</span><span style="font-size:clamp(22px,2.4vw,32px);font-weight:500;letter-spacing:-.02em">Make it an overnight — stay at a Seneca resort</span></span>
+    <span style="font-size:15px;font-weight:600;color:var(--accent-ink)">Compare Seneca hotels →</span>
+  </a>
+</section>
+{% endif %}
+
+<!-- 06 Dining -->
+<section id="dining" class="section pad" style="padding-top:32px">
+  <div class="sec-head rise" style="margin-bottom:20px">
+    <h2 class="h2">Dining</h2>
+    <a class="link" href="#dining" style="font-size:15px;color:var(--accent-ink);font-weight:600">Menus &amp; hours →</a>
+  </div>
+  <div class="bar"><span style="font-weight:500">Restaurants &amp; bars</span><span class="meta hide-sm">{{ t.diningTypes }}</span></div>
+  <div class="grid g-3">
+    {% for d in dining %}
+    <a class="card rise" href="#dining" style="display:flex;flex-direction:column;gap:10px;text-decoration:none">
+      <span class="well r-11"><img class="px" src="{{ d.img }}" alt="{{ d.alt }}" loading="lazy"></span>
+      <span style="font-size:15px">{{ d.name }}</span><span class="meta" style="font-size:13px;margin-top:-6px">{{ d.meta }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- 07 Entertainment & events -->
+<section id="events" class="section pad" style="background:var(--tint)">
+  <div class="sec-head rise">
+    <h2 class="h2">What's on</h2>
+    <label style="display:inline-flex;align-items:center;gap:8px;font-size:14px;color:#4a484d">When <select class="select" style="border-color:#c9c6cf"><option>Next 30 days</option><option>This weekend</option><option>Pick dates</option></select></label>
+  </div>
+  <ol class="events" style="border-color:#c9c6cf">
+    {% for e in events %}
+    <li class="ev rise" style="border-color:#c9c6cf"><div><div class="day">{{ e.day }}</div><div class="mon">{{ e.mon }}</div></div><div><div class="title">{{ e.title }}</div><div class="sub">{{ e.sub }}</div></div><div class="venue">{{ e.venue }}</div><a class="btn sm {{ 'btn-dark' if e.tickets else 'btn-ghost' }}" href="#events">{{ 'Find tickets' if e.tickets else 'Details' }}</a></li>
+    {% endfor %}
+  </ol>
+</section>
+
+<!-- 08 Gaming / The course -->
+<section id="{{ 'gaming' if t.hasCasino else 'course' }}" class="band">
+  <img class="px" src="{{ t.feature }}" alt="" loading="lazy" style="opacity:.7">
+  <div class="band-scrim"></div>
+  <div class="band-body pad">
+    <div class="drift" style="max-width:760px">
+      <p class="kicker"><span class="dot" style="background:var(--accent)"></span>{{ t.featureKicker }}</p>
+      <h2>{{ t.featureTitle|safe }}</h2>
+    </div>
+    <div style="max-width:440px;width:100%;display:flex;flex-direction:column;gap:20px">
+      <ul class="band-list">{% for f in t.featureItems %}<li><a href="#{{ 'gaming' if t.hasCasino else 'course' }}">{{ f }}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></li>{% endfor %}</ul>
+      <p style="margin:0;font-size:13px;color:#e2e2e2">{{ t.featureNote }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 Amenities & nearby -->
+<section id="amenities" class="section pad">
+  <h2 class="h2 rise" style="margin-bottom:32px">Amenities<br>&amp; nearby</h2>
+  <ul class="rows">
+    {% for m in t.amenities %}<li><a href="{{ m.href or '#amenities' }}"><span class="big">{{ m.n }}</span><span class="tag">{{ m.tag }}</span></a></li>{% endfor %}
+  </ul>
+</section>
+
+<!-- 10 Social Club -->
+<section id="club" class="pad" style="padding-bottom:96px">
+  <div class="well" style="background:var(--ink);color:#fff;padding:64px 48px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;justify-content:space-between">
+    <img class="px" src="{{ img.concert_warm }}" alt="" loading="lazy" style="opacity:.55">
+    <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,14,30,.92) 0%,rgba(20,14,30,.7) 60%,rgba(20,14,30,.55) 100%)"></div>
+    <div style="position:relative;max-width:640px">
+      <p class="kicker" style="color:#cbbcf0;margin-bottom:14px">Seneca Social Club</p>
+      <h2 style="margin:0;font-weight:500;font-size:clamp(36px,4.6vw,72px);line-height:.98;letter-spacing:-.04em">Earn here. Redeem at every Seneca property.</h2>
+      <p style="margin:18px 0 0;font-size:15px;color:#e4def3;max-width:520px">Personal offers live in your account — sign in to see the ones valid at {{ t.short }}.</p>
+    </div>
+    <div class="btn-row" style="position:relative"><a class="btn btn-white" href="#club" style="color:var(--brand);font-weight:600">Join free</a><a class="btn btn-ghost-light" href="#club">Sign in</a></div>
+  </div>
+</section>
+
+<!-- 11 Plan your visit -->
+<section id="visit" class="pad" style="padding-bottom:96px">
+  <div class="split">
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:24px">
+      <h2 class="h2 rise">Plan your visit</h2>
+      <dl class="dl">
+        <dt>Address</dt><dd>[Street address], {{ t.city }}</dd>
+        <dt>Parking</dt><dd>[Self &amp; valet parking details]</dd>
+        <dt>Phone</dt><dd>[Property phone]</dd>
+        <dt>Hours</dt><dd>[Hours]</dd>
+      </dl>
+      <div class="btn-row"><a class="btn btn-accent" href="https://www.google.com/maps/search/?api=1&query={{ t.mapQuery|urlencode }}" target="_blank" rel="noopener">Get directions</a><a class="btn btn-quiet" href="#visit">FAQs</a><a class="btn btn-quiet" href="#visit">Accessibility</a></div>
+    </div>
+    <div class="map rise">
+      <iframe title="Map of {{ t.name }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q={{ t.mapQuery|urlencode }}&z=13&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- 12 Sibling properties + footer -->
+<footer class="footer">
+  <img class="px blur" src="{{ t.hero }}" alt="" loading="lazy">
+  <div style="position:relative;display:flex;flex-direction:column;gap:16px">
+    <div style="background:#fff;padding:28px 40px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 40px">
+      <span class="meta">Explore other Seneca properties</span>
+      {% for s in siblings %}<a class="link" href="{{ s.file }}" style="display:inline-flex;align-items:center;gap:8px;font-size:15px"><span class="dot" style="background:{{ s.accent }}"></span>{{ s.short }}</a>{% endfor %}
+      <a class="link" href="index.html" style="margin-left:auto;font-size:15px;font-weight:600;color:var(--brand)">All properties →</a>
+    </div>
+    <div class="f-card" style="position:static">
+      <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px">
+        <p style="margin:0;font-size:clamp(22px,2.2vw,30px);line-height:1.2;color:var(--muted);letter-spacing:-.015em">Questions before you visit?<br>Our team at {{ t.short }} can help.</p>
+        <a href="#visit" style="font-size:clamp(24px,2.4vw,34px);text-underline-offset:6px;letter-spacing:-.02em">Contact guest services →</a>
+      </div>
+      <div class="f-cols">
+        <div><span class="meta">{{ t.short }}</span>{% for n in nav %}<a href="{{ n.href }}">{{ n.label }}</a>{% endfor %}</div>
+        <div><span class="meta">Guest services</span><a href="#visit">Contact</a><a href="#visit">FAQs</a><a href="#visit">Accessibility</a><a href="#visit">Directions</a></div>
+        <div><span class="meta">Seneca Resorts &amp; Casinos</span><a href="index.html">All properties</a><a href="index.html">About Seneca</a><a href="index.html">Careers</a><a href="index.html">Responsible gaming</a></div>
+      </div>
+      <div class="f-legal">
+        <span style="display:inline-flex;align-items:center;gap:20px"><img src="{{ t.logo }}" alt="{{ t.name }}" style="height:48px;width:auto"><span aria-hidden="true" style="width:1px;height:36px;background:var(--line-2)"></span><img src="{{ logos.master }}" alt="Seneca Resorts &amp; Casinos" style="height:40px;width:auto"></span>
+        <span>Must be 21 or older to gamble. Gambling problem? Call 1-877-8-HOPENY.</span>
+        <span style="display:flex;gap:20px"><a class="link" href="#main">Privacy</a><a class="link" href="#main">Terms</a><span>© 2026</span></span>
+      </div>
+      <p class="credit" style="margin:-40px 0 0">Placeholder photography: Unsplash (free license).</p>
+    </div>
+  </div>
+</footer>
+</div>
+</main>
+{% include "_foot.j2" %}

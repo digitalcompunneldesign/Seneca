@@ -1,0 +1,78 @@
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var native = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
+
+  /* Mobile drawer */
+  var drawer = document.getElementById('drawer');
+  document.querySelectorAll('[data-open-menu]').forEach(function(b){
+    b.addEventListener('click', function(){ drawer.classList.add('open'); b.setAttribute('aria-expanded','true'); drawer.querySelector('.close').focus(); });
+  });
+  if (drawer){
+    drawer.querySelector('.close').addEventListener('click', function(){ drawer.classList.remove('open'); });
+    drawer.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ drawer.classList.remove('open'); }); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') drawer.classList.remove('open'); });
+  }
+
+  /* Filter chips (visual state only in this prototype) */
+  document.querySelectorAll('[data-chips]').forEach(function(g){
+    g.addEventListener('click', function(e){
+      var c = e.target.closest('.chip'); if(!c) return;
+      g.querySelectorAll('.chip').forEach(function(x){ x.setAttribute('aria-pressed','false'); });
+      c.setAttribute('aria-pressed','true');
+    });
+  });
+
+  /* "What would you like to do?" hover preview */
+  var fig = document.querySelector('.xp-fig');
+  if (fig){
+    var fimg = fig.querySelector('img'), fcap = fig.querySelector('figcaption');
+    document.querySelectorAll('.xp-row').forEach(function(r){
+      function show(){
+        document.querySelectorAll('.xp-row.on').forEach(function(x){ x.classList.remove('on'); });
+        r.classList.add('on');
+        if (fimg.getAttribute('src') !== r.dataset.img){
+          fimg.style.opacity = 0;
+          setTimeout(function(){ fimg.src = r.dataset.img; fimg.alt = r.dataset.alt; fcap.textContent = r.dataset.name; fimg.style.opacity = 1; }, 160);
+        }
+      }
+      r.addEventListener('mouseenter', show); r.addEventListener('focus', show);
+    });
+  }
+
+  if (reduce || native) return;
+
+  /* ---- Fallback for browsers without scroll-driven animations ---- */
+  document.documentElement.classList.add('js-reveal');
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -10% 0px' });
+  document.querySelectorAll('.rise').forEach(function(el){ io.observe(el); });
+
+  var pxEls = [].slice.call(document.querySelectorAll('.px'));
+  var drifts = [].slice.call(document.querySelectorAll('.drift'));
+  var heroImg = document.querySelector('.hero-img'), heroBody = document.querySelector('.hero-body');
+  var ticking = false;
+  function frame(){
+    var vh = window.innerHeight, y = window.scrollY;
+    pxEls.forEach(function(el){
+      var r = el.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var p = (vh - r.top) / (vh + r.height);            /* 0 → 1 while in view */
+      el.style.transform = 'translate3d(0,' + ((p - .5) * 18).toFixed(2) + '%,0)';
+    });
+    drifts.forEach(function(el){
+      var r = el.getBoundingClientRect(); var p = (vh - r.top) / (vh + r.height);
+      el.style.transform = 'translate3d(0,' + ((.5 - p) * 160).toFixed(1) + 'px,0)';
+    });
+    if (heroImg){ var h = Math.min(y / 900, 1); heroImg.style.transform = 'scale(' + (1.04 + .18*h) + ') translate3d(0,' + (6*h) + '%,0)'; }
+    if (heroBody){ var t = Math.min(y / 700, 1); heroBody.style.opacity = 1 - t; heroBody.style.transform = 'translate3d(0,' + (-120*t) + 'px,0)'; }
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ ticking = true; requestAnimationFrame(frame); } }, { passive: true });
+  window.addEventListener('resize', frame);
+  frame();
+})();
+</script>
+</body>
+</html>
